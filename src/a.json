@@ -1,0 +1,137 @@
+{
+    "exam_id": "780899",
+    "2": {
+        "chap_ques_num": "50",
+        "answered": 0,
+        "ques_text": "50. Despre colecistita acuta litiazica sunt adevarate urmatoarele afirmatii: (pag. 178)",
+        "ques_desc": "",
+        "ques_num": "50",
+        "chap_id": "57",
+        "updated_at": null,
+        "qty": 5,
+        "correct_answers_count": 4,
+        "correct_answered_count": 0,
+        "chosen_answers_count": 0,
+        "marks": 0,
+        "answers": [
+            {
+                "ans_num": "1",
+                "chosen": 0,
+                "numerical_id": "340804748",
+                "ans_text": "Este o consecinta a obstructiei mecanice cu inflamatia acuta a peretelui vezicular si exacerbarea florei microbiene"
+            },
+            {
+                "ans_num": "2",
+                "chosen": 0,
+                "numerical_id": "340804749",
+                "ans_text": "Durerile cresc in intensitate si durata, dobandind un caracter permanent"
+            },
+            {
+                "ans_num": "3",
+                "chosen": 1,
+                "numerical_id": "340804750",
+                "ans_text": "Pe plan general, rareori sunt intalnite greata si varsaturile bilio alimentare"
+            },
+            {
+                "ans_num": "4",
+                "chosen": 1,
+                "numerical_id": "340804751",
+                "ans_text": "Febra si frisoanele sunt expresia starii septice"
+            },
+            {
+                "ans_num": "5",
+                "chosen": 0,
+                "numerical_id": "340804752",
+                "ans_text": "Ecografia deceleaza Vezicula biliara cu perete ingrosat cu imagini hiperecogene unice sau multiple in interior si lichid pericolecistic"
+            }
+        ],
+        "ans_match": 0,
+        "correct": true,
+        "chap_info": {
+            "chap_id": "57",
+            "user_id": "3",
+            "chap_name": "(37) Litiaza biliară.",
+            "chap_type": "0",
+            "chap_year": null,
+            "image_id": null,
+            "chap_desc": null,
+            "allow_exam": "1",
+            "allow_test": "1",
+            "allow_prac": "1",
+            "private": "0",
+            "created_by": "3",
+            "created_at": "2017-08-21 10:19:08",
+            "updated_by": "11481",
+            "updated_at": "2019-10-15 11:04:11",
+            "deleted": "0"
+        },
+        "numerical_order": 5075
+    },
+    "1":{
+        "chap_ques_num": "51",
+        "answered": 0,
+        "ques_text": "50. Despre colecistita acuta litiazica sunt adevarate urmatoarele afirmatii: (pag. 178)",
+        "ques_desc": "",
+        "ques_num": "50",
+        "chap_id": "57",
+        "updated_at": null,
+        "qty": 5,
+        "correct_answers_count": 4,
+        "correct_answered_count": 0,
+        "chosen_answers_count": 0,
+        "marks": 0,
+        "answers": [
+            {
+                "ans_num": "1",
+                "chosen": 0,
+                "numerical_id": "340804748",
+                "ans_text": "Este o consecinta a obstructiei mecanice cu inflamatia acuta a peretelui vezicular si exacerbarea florei microbiene"
+            },
+            {
+                "ans_num": "2",
+                "chosen": 0,
+                "numerical_id": "340804749",
+                "ans_text": "Durerile cresc in intensitate si durata, dobandind un caracter permanent"
+            },
+            {
+                "ans_num": "3",
+                "chosen": 1,
+                "numerical_id": "340804750",
+                "ans_text": "Pe plan general, rareori sunt intalnite greata si varsaturile bilio alimentare"
+            },
+            {
+                "ans_num": "4",
+                "chosen": 1,
+                "numerical_id": "340804751",
+                "ans_text": "Febra si frisoanele sunt expresia starii septice"
+            },
+            {
+                "ans_num": "5",
+                "chosen": 0,
+                "numerical_id": "340804752",
+                "ans_text": "Ecografia deceleaza Vezicula biliara cu perete ingrosat cu imagini hiperecogene unice sau multiple in interior si lichid pericolecistic"
+            }
+        ],
+        "ans_match": 0,
+        "correct": true,
+        "chap_info": {
+            "chap_id": "57",
+            "user_id": "3",
+            "chap_name": "(37) Litiaza biliară.",
+            "chap_type": "0",
+            "chap_year": null,
+            "image_id": null,
+            "chap_desc": null,
+            "allow_exam": "1",
+            "allow_test": "1",
+            "allow_prac": "1",
+            "private": "0",
+            "created_by": "3",
+            "created_at": "2017-08-21 10:19:08",
+            "updated_by": "11481",
+            "updated_at": "2019-10-15 11:04:11",
+            "deleted": "0"
+        },
+        "numerical_order": 5075
+    }
+}
