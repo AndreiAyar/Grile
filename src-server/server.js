@@ -28,7 +28,7 @@ const typeDefs = gql`
     question: String
     uniqueid: Int
     answers: [Answer]
-    chapter: Chapter
+    chapter(chap:Int): Chapter
   }
 
 
@@ -36,8 +36,7 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    questions (id: Int):[Question]
-    chapters:[Chapter]
+    questions (chap: Int, first:Int, offset:Int):[Question]
 
   }
 `;
@@ -70,12 +69,17 @@ const resolvers = {
                 });
                 //  console.log(questions[i].chapter.chap_id[1])
             }
-
-            if (args.id !== undefined) {
-                return [questions[args.id]];
+            if(args.chap !== undefined && args.first !== undefined){
+               questions_chapter =  questions.filter(x => {
+                   return x.chapter.chap_id === args.chap.toString();
+                })
+                return questions_chapter.slice(args.first, args.offset)
             }
+            /*
+            if (args.first !== undefined) {
+                return questions.slice(args.first, args.offset);
+            }*/
 
-            return questions
         },
 
     }
