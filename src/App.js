@@ -1,12 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Grile from './Grile'
+import Grills from './components/Grile'
+import HeaderMenu from './components/Header'
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+import './style.css'
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000',
+});
+
 
 function App() {
   return (
-
-    <Grile />
+    <React.Fragment>
+      <HeaderMenu />
+      <ApolloProvider client={client}>
+        <div>
+          <Grills />
+        </div>
+      </ApolloProvider >
+    </React.Fragment>
 
   );
 }

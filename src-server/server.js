@@ -69,17 +69,17 @@ const resolvers = {
                 });
                 //  console.log(questions[i].chapter.chap_id[1])
             }
-            if(args.chap !== 999 && args.first !== undefined){
-               questions_chapter =  questions.filter(x => {
-                   return x.chapter.chap_id === args.chap.toString();
+            if (args.chap !== 999 && args.first !== undefined) {
+                questions_chapter = questions.filter(x => {
+                    return x.chapter.chap_id === args.chap.toString();
                 })
                 return questions_chapter.slice(args.first, args.offset)
-            }else if(args.chap === 999){
-                    return questions.slice(args.first, args.offset)
+            } else if (args.chap === 999) {
+                return questions.slice(args.first, args.offset)
             }
             /*
             if (args.first !== undefined) {
-                return questions.slice(args.first, args.offset);
+                return questions.slice(args.first, args.$offset);
             }*/
 
         },
