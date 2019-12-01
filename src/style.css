@@ -2,7 +2,7 @@ body {background-color:#FDFDFDee; margin:0 auto;}
 
 
 /**** Questions */
-#question{border:solid 1px #d3d3d3; border-radius:15px 50px;box-shadow:5px 5px 5px rgb(190, 190, 190); width:80%;margin:50px 0 50px 20px;}
+.question{border:solid 1px #d3d3d3; border-radius:15px 50px;box-shadow:5px 5px 5px rgb(190, 190, 190); width:80%;margin:50px 0 50px 20px;}
         .question-inner{margin-left:20px;padding-bottom:26px;}
             .question-list{padding:0;}
             .question-text{color:#004445;font-weight: 400; font-size: 26px;font-family:Roboto;}

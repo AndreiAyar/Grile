@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import QuestionsView from './QuestionsView'
+import AnswerView from './AnswerView'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
 
 const GET_QUESTIONS = gql`
     query($chap:Int, $first:Int, $offset:Int){
-    
-    questions(chap:$chap, first:$first, offset:$offset)
+        questions(chap:$chap, first:$first, offset:$offset)
         {
             question
             answers
@@ -25,13 +24,76 @@ function DisplayAnswer({ isCorrect }) {
     if (isCorrect === 1) {
         return 'Corect'
     } else {
-        console.log(isCorrect)
+        //console.log(isCorrect)
         return 'Gresit '
 
     }
 }
 
-function QuestionsData({ chap, first, offset, status }) {
+function QuestionItem({ question, answers }) {
+    const [answeredItems, setAnsweredItems] = useState({});
+    const [validItems, setValidItems] = useState({});
+
+    return (
+        <div className='question'>
+            <div className='question-inner'>
+                <h3 className='question-list question-text'>{question}</h3>
+                <ul className='answers'>
+                    {
+                        answers.map(({ ans_text, correct, ans_num }, index) => (
+                            <li className="answer" key={index}>
+                                <AnswerView
+                                    /*props={{ answerDetails: { ans_num, ans_text, correct }, questionDetails: { index, question } }}*/
+                                    ans_num={ans_num}
+                                    ans_text={ans_text}
+                                    correct={correct}
+                                    isValid={validItems[ans_num] !== undefined ? validItems[ans_num] : null}
+                                    onChange={(ans_num, value) => {
+                                        let newState = {
+                                            ...answeredItems,
+                                            [ans_num]: value
+                                        };
+                                        if (!value) {
+                                            delete newState[ans_num];
+                                            // newState = newState.filter(x => x !== ans_num);
+                                        }
+                                        setAnsweredItems(newState);
+                                    }}
+                                />
+                                <span>
+                                    {correct}  <DisplayAnswer isCorrect={correct} />
+                                    <br />
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+                <button onClick={() => {
+                    const newValidItems = {};
+                    answers.map((answer) => {
+                        if (answeredItems[answer.ans_num] !== undefined) {
+                            let isValid = false;
+
+                            // daca eu am bifat true
+                            if (answeredItems[answer.ans_num] === true && answer.correct) {
+                                isValid = true;
+                            }
+
+                            newValidItems[answer.ans_num] = isValid;
+                        }
+
+                        else if (answer.correct && answeredItems[answer.ans_num] === undefined) {
+                            newValidItems[answer.ans_num] = false;
+                        }
+                    });
+                    setValidItems(newValidItems);
+                }}>Verifica raspunsuri</button>
+            </div>
+        </div>
+    )
+}
+
+function QuestionsList({ chap, first, offset }) {
 
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
         variables: { chap, first, offset }
@@ -40,44 +102,10 @@ function QuestionsData({ chap, first, offset, status }) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-
-    return data.questions.map(({ question, answers }, index) => (
-
-        <div id='question' key={index}>
-            <div className='question-inner'>
-                <ol className='question-list'><h3 className='question-list question-text'>{question}</h3></ol>
-                {
-                    answers.map(({ ans_text, correct }, index) => (
-                        <div className='answers' key={index}>
-
-                            <li key={index} className='answers-list' ><QuestionsView testing={status} prop={ans_text} /></li>
-
-
-
-                            <span>
-
-                                {correct}  <DisplayAnswer isCorrect={correct} />
-
-
-                                <br />
-                            </span>
-                        </div>
-
-                    ))
-                }
-
-
-
-
-                <button>s</button>
-            </div >
-        </div>
-        //console.log(answers[1].ans_text)
-    ));
-
+    return data.questions.map(({ question, answers }, index) => <QuestionItem key={index} question={question} answers={answers} />);
 }
 
-export default QuestionsData
+export default QuestionsList
 
 
 
