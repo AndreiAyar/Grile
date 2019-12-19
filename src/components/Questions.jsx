@@ -15,8 +15,13 @@ const GET_QUESTIONS = gql`
                     ans_text
                     correct
                 }
+          chapter{
+            chap_id
+            chap_name
+          }
         }
     }
+  
 `;
 
 function DisplayAnswer({ isCorrect }) {
@@ -34,7 +39,8 @@ function QuestionItem({ question, answers }) {
     const [answeredItems, setAnsweredItems] = useState({});
     const [validItems, setValidItems] = useState({});
 
-    return (
+   return(
+       
         <div className='question'>
             <div className='question-inner'>
                 <h3 className='question-list question-text'>{question}</h3>
@@ -61,7 +67,7 @@ function QuestionItem({ question, answers }) {
                                     }}
                                 />
                                 <span>
-                                    {correct}  <DisplayAnswer isCorrect={correct} />
+                              {/*  {correct}  <DisplayAnswer isCorrect={correct} />*/}
                                     <br />
                                 </span>
                             </li>
