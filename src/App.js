@@ -17,6 +17,10 @@ function App() {
       <ApolloProvider client={client}>
         <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          <Chapters chap={999} first={0} offset={300} />
+>>>>>>> parent of 36ef26f... before context
 =======
           <Chapters chap={999} first={0} offset={300} />
 >>>>>>> parent of 36ef26f... before context
