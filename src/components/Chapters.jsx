@@ -32,9 +32,6 @@ function Chapters ({first, filter}) {
         )
          
 }
-function s(){
-    return <QuestionsList  chapID={1} first={0} offset={5}/>
-}
 function ChapterItem({chapter},key){
 
     return(
