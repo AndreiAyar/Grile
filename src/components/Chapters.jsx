@@ -38,16 +38,6 @@ function Chapters ({ chap, first, offset }) {
  //  console.log()
     return x
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-function ChapterItem({chapter},key){
-=======
->>>>>>> parent of 36ef26f... before context
-=======
->>>>>>> parent of 36ef26f... before context
-
-
-  
 
     
 export default Chapters;
