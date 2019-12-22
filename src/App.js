@@ -18,6 +18,10 @@ function App() {
         <div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          <Chapters chap={999} first={0} offset={300} />
+>>>>>>> parent of 36ef26f... before context
 =======
           <Chapters chap={999} first={0} offset={300} />
 >>>>>>> parent of 36ef26f... before context
