@@ -16,6 +16,10 @@ function App() {
       <HeaderMenu />
       <ApolloProvider client={client}>
         <div>
+<<<<<<< HEAD
+=======
+          <Chapters chap={999} first={0} offset={300} />
+>>>>>>> parent of 36ef26f... before context
           <Grills />
         </div>
       </ApolloProvider >
