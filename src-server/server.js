@@ -28,7 +28,7 @@ const typeDefs = gql`
     question: String
     uniqueid: Int
     answers: [Answer]
-    chapter(chap:Int): Chapter
+    chapter(chapID:Int): Chapter
   }
 
 
@@ -36,7 +36,7 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    questions (chap: Int, first:Int, offset:Int):[Question]
+    questions (chapID: Int, chapName: String, first:Int, offset:Int, filter:String):[Question]
 
   }
 `;
@@ -69,20 +69,43 @@ const resolvers = {
                 });
                 //  console.log(questions[i].chapter.chap_id[1])
             }
-            if (args.chap !== 999 && args.first !== undefined) {
+            //* Returns specifc chapter based on how much First and Offset is given
+            if (args.chapID !== 999 && args.first !== undefined && args.filter !=='unique' && args.chapName === undefined) {
                 questions_chapter = questions.filter(x => {
-                    return x.chapter.chap_id === args.chap.toString();
+                    return x.chapter.chap_id === args.chapID.toString();
                 })
                 return questions_chapter.slice(args.first, args.offset)
-            } else if (args.chap === 999) {
+                
+            //* Returns all chapters, based on how much First and Offset Is given
+            } else if (args.chapID === 999) {
                 return questions.slice(args.first, args.offset)
-            }
-            /*
-            if (args.first !== undefined) {
-                return questions.slice(args.first, args.$offset);
-            }*/
 
-        },
+            //* Returns all the Chapter names, based on First arg(usually 0...)
+            }else if(args.first !== undefined && args.filter === 'unique'){
+                const gotQuestions = questions.slice(args.first)
+                questionsSet = new Set(gotQuestions.map(z=>(z.chapter.chap_name)))
+                let questionsObj=[]
+               // console.log(questionsSet)
+                for(let value of questionsSet) {  
+                    chapters={
+                        chapter:{
+                        chap_name:value,
+                    }
+                }
+                  questionsObj.push(chapters)
+              };
+            //n  console.log(questionsObj)
+              return questionsObj;
+                
+            }else if(args.chapName !== undefined){
+                questions_chapter = questions.filter(x => {
+                    return x.chapter.chap_name === args.chapName;
+                })
+                return questions_chapter.slice(args.first)
+            }
+        
+         
+        }
 
     }
 
@@ -118,3 +141,19 @@ server.listen().then(({ url }) => {
     console.log(`🚀  Server ready at ${url} `);
 });
 
+
+
+//Working code
+/*
+}else if(args.first !== undefined && args.filter === 'unique'){
+    let arr=[];
+    let x = questions.slice(args.first)
+        for(let i=0; i <= x.length-1; i++){//x[i].chapter.chap_id, 
+            arr.push({chap_name: x[i].chapter.chap_name})
+
+    }
+    const distinctChapters = new Set(arr.map(z=>z.chap_name))
+    console.log(distinctChapters)
+    return distinctChapters
+    
+}*/
