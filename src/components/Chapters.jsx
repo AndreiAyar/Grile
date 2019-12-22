@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import QuestionsList from './Questions'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
 
 const GET_QUESTIONS = gql`
-    query($first:Int, $filter:String){
-        questions(first:$first, filter:$filter)
+    query($chap:Int, $first:Int, $offset:Int){
+        questions(chap:$chap, first:$first, offset:$offset)
         {
+            question
+            answers
+                {
+                    ans_num
+                    ans_text
+                    correct
+                }
           chapter{
+            chap_id
             chap_name
           }
         }
@@ -16,33 +23,27 @@ const GET_QUESTIONS = gql`
   
 `;
 
-function Chapters ({first, filter}) {
+function Chapters ({ chap, first, offset }) {
 
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
-        variables: {first, filter}
+        variables: { chap, first, offset }
     });
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-
-        return data.questions.map(({ chapter }, i) => 
-            <ChapterItem chapter={chapter.chap_name} key={i}/>
+  
     
-        )
-         
+    let x = data.questions.map(({ chapter,chap_id}, index) => console.log(chapter));
+ //  console.log()
+    return x
 }
+<<<<<<< HEAD
 function ChapterItem({chapter},key){
+=======
+>>>>>>> parent of 36ef26f... before context
 
-    return(
-        <div className="chapter">
-         <button onClick={()=> (
-             console.log('s')
-           )}>{chapter}</button>
-      </div>
-    )
 
-}
   
 
     

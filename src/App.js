@@ -17,12 +17,8 @@ function App() {
       <HeaderMenu />
       <ApolloProvider client={client}>
         <div>
-        <div id="chapters">
-           <Chapters first={0} filter={"unique"} />
-        </div>
-        <div id="questions">
+          <Chapters chap={999} first={0} offset={300} />
           <Grills />
-        </div>
         </div>
       </ApolloProvider >
     </React.Fragment>

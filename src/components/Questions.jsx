@@ -5,8 +5,8 @@ import { gql } from "apollo-boost";
 
 
 const GET_QUESTIONS = gql`
-    query($chapID:Int, $first:Int, $offset:Int){
-        questions(chapID:$chapID, first:$first, offset:$offset)
+    query($chap:Int, $first:Int, $offset:Int){
+        questions(chap:$chap, first:$first, offset:$offset)
         {
             question
             answers
@@ -99,16 +99,16 @@ function QuestionItem({ question, answers }) {
     )
 }
 
-function QuestionsList({ chapID, first, offset }) {
-    const [questionList, questionLoad] = useState('');
+function QuestionsList({ chap, first, offset }) {
+
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
-        variables: { chapID, first, offset }
+        variables: { chap, first, offset }
     });
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    return data.questions.map(({ question, answers }, index) => <QuestionItem key={index} questionList={question} answers={answers} />);
+    return data.questions.map(({ question, answers }, index) => <QuestionItem key={index} question={question} answers={answers} />);
 }
 
 export default QuestionsList
