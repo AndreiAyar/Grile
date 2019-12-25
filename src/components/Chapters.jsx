@@ -1,46 +1,57 @@
-import React, { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react'
+
+import Grills from '../components/Grile'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
 
 const GET_QUESTIONS = gql`
-    query($chap:Int, $first:Int, $offset:Int){
-        questions(chap:$chap, first:$first, offset:$offset)
+    query($first:Int, $filter:String){
+        questions(first:$first, filter:$filter)
         {
-            question
-            answers
-                {
-                    ans_num
-                    ans_text
-                    correct
-                }
           chapter{
-            chap_id
             chap_name
+            chap_id
           }
         }
     }
   
 `;
 
-function Chapters ({ chap, first, offset }) {
-
+function Chapters ({first, filter, setChapId}) {   
+    // const [getQ, {loading, data}] = useLazyQuery(GET_QUESTIONS)
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
-        variables: { chap, first, offset }
+        variables: {first, filter}
     });
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-
-  
     
-    let x = data.questions.map(({ chapter,chap_id}, index) => console.log(chapter));
- //  console.log()
-    return x
+    if (loading) return <p>Loading chapters...</p>;
+    if (data && data.questions){
+      console.log(data.questions)
+        return data.questions.map(({chapter }, index) => {
+          return (
+            <button
+              onClick={() => setChapId(chapter.chap_id)}
+              style={{marginRight:10,marginBottom:10}}
+            >{chapter.chap_name}</button>
+          )
+        })
+    }
+
+    /*
+    return(
+    <div>
+    <button onClick={() => getQ({ variables: { first, filter } })}>
+      Click me!
+    </button>
+    </div>
+      )
+      */
+   return null;
+}
+function s(){
+    //return <QuestionsList  chapID={1} first={0} offset={5}/>
 }
 
-
-  
 
     
 export default Chapters;
