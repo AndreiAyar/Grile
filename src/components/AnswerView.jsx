@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 const debugging = true;
-
+let answeredAllCorrect = 0;
 /*
 function debuggQ(props) {
     if (debugging) {
@@ -14,20 +14,31 @@ function debuggQ(props) {
 }
 */
 
-function AnswerView({ ans_text, ans_num, isValid, onChange }) {
-    const style = {};
+function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestionCorrect, questionCorrect}) {
+    const style = {borderRadius:5, padding:5};
+    //console.log(questionCorrect)
     if (isValid !== null) {
-        style.background = isValid ? 'green' : 'red';
+        if(isValid ){
+        answeredAllCorrect = 1;
+        }else{
+            answeredAllCorrect = 1;
+        }
+        style.background = isValid ? '#4caf50' : '#f44336';
+        disabled=true;
     }
+
     return (
+        
         <div style={style}>
             <FormControl component="fieldset" onChange={e => {
                 // debuggQ(props);
+            //
                 onChange(ans_num, e.target.checked);
             }}>
                 <FormGroup aria-label="position" row>
                     <FormControlLabel
                         label={ans_text}
+                        disabled={disabled}
                         value="end"
                         control={<Checkbox color="primary" />}
                         labelPlacement="end"
@@ -35,7 +46,10 @@ function AnswerView({ ans_text, ans_num, isValid, onChange }) {
                 </FormGroup>
             </FormControl>
         </div>
+
     )
+
+  
 }
 
 

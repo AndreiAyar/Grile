@@ -1,9 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import AnswerView from './AnswerView'
-import TitleList from '../contexts/TitleContext'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
+import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { green, purple } from '@material-ui/core/colors';
 
+  const ColorButton = withStyles(theme => ({
+    root: {
+      color: theme.palette.getContrastText(green[700]),
+      backgroundColor: green[700],
+      '&:hover': {
+        backgroundColor: green[900],
+      },
+    },
+  }))(Button);
+  
 
 const GET_QUESTIONS = gql`
     query($chapID:Int, $first:Int, $offset:Int){
@@ -36,22 +48,29 @@ function DisplayAnswer({ isCorrect }) {
     }
 }
 
-function QuestionItem({ question, answers }) {
-    const [questionList, questionLoad] = useState({question});
+function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong}) {
+    //const [questionList, questionLoad] = useState({question});
     const [answeredItems, setAnsweredItems] = useState({});
     const [validItems, setValidItems] = useState({});
    return(
         <div className='question'>
+            {
+
+            
+            }
             <div className='question-inner'>
                 <h3 className='question-list question-text'>{question}</h3>
                 <ul className='answers'>
                     {
                         answers.map(({ ans_text, correct, ans_num }, index) => (
                             <li className="answer" key={index}>
+                                
                                 <AnswerView
                                     /*props={{ answerDetails: { ans_num, ans_text, correct }, questionDetails: { index, question } }}*/
                                     ans_num={ans_num}
                                     ans_text={ans_text}
+                                    questionCorrect={questionCorrect}
+                                    setQuestionCorrect={setQuestionCorrect}
                                     correct={correct}
                                     isValid={validItems[ans_num] !== undefined ? validItems[ans_num] : null}
                                     onChange={(ans_num, value) => {
@@ -67,49 +86,67 @@ function QuestionItem({ question, answers }) {
                                     }}
                                 />
                                 <span>
-                              {/*  {correct}  <DisplayAnswer isCorrect={correct} />*/}
+                             {/* {correct}  <DisplayAnswer isCorrect={correct} />*/}
                                     <br />
                                 </span>
                             </li>
                         ))
                     }
                 </ul>
-                <button onClick={() => {
+                <ColorButton variant="contained" color="primary" onClick={(e) => {
+               /* <button onClick={() => {*/
+                    let onlyOneValid = true;
                     const newValidItems = {};
                     answers.map((answer) => {
+                        let isValid = false;
                         if (answeredItems[answer.ans_num] !== undefined) {
-                            let isValid = false;
+                            
+                     
 
                             // daca eu am bifat true
                             if (answeredItems[answer.ans_num] === true && answer.correct) {
                                 isValid = true;
+                              
+           
                             }
 
                             newValidItems[answer.ans_num] = isValid;
+                           
                         }
 
                         else if (answer.correct && answeredItems[answer.ans_num] === undefined) {
                             newValidItems[answer.ans_num] = false;
+                            onlyOneValid = false
+                                setQuestionWrong(questionWrong + 1)
+                            
+                          
+                        
+                       
                         }
+                     
+                   
+
                     });
-                
+                    if(onlyOneValid !== false){
+                        setQuestionCorrect(questionCorrect+1)
+                    }
                  setValidItems(newValidItems);
-                }}>Verifica raspunsuri</button>
+
+                }}>Verifica raspunsuri </ColorButton>
             </div>
         </div>
     )
 }
 
-function QuestionsList({ chapID, first, offset }) {
+function QuestionsList({ chapID, first, offset, questionCorrect,setQuestionCorrect, questionWrong, setQuestionWrong }) {
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
         variables: { chapID, first, offset }
     });
-
+  
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-
-    return data.questions.map(({ question, answers }, index) => <QuestionItem key={index} question={question} answers={answers}/>);
-    }
+    return data.questions.map(({ question, answers, chapter }, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect}  questionWrong={questionWrong} setQuestionWrong={setQuestionWrong}  question={question} answers={answers} chapter={chapter.chap_name}/>);
+     }
 
 export default QuestionsList
 
