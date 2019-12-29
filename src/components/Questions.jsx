@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import AnswerView from './AnswerView'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
-import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+/**** Material UI */
+import {  withStyles, } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { green, purple } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 
   const ColorButton = withStyles(theme => ({
     root: {
@@ -36,17 +37,6 @@ const GET_QUESTIONS = gql`
     }
   
 `;
-
-function DisplayAnswer({ isCorrect }) {
-
-    if (isCorrect === 1) {
-        return 'Corect'
-    } else {
-        //console.log(isCorrect)
-        return 'Gresit '
-
-    }
-}
 
 function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong}) {
     //const [questionList, questionLoad] = useState({question});

@@ -13,7 +13,7 @@ li.answer{list-style-type: none;font-family: 'Roboto', sans-serif;text-decoratio
 
 /**** Correct Vs Wrong */
 .questions-status{width:500px;margin:50px auto;}
-.questions-status-correct {color:green;float:left;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;}
+.questions-status-correct {color:green;float:left;font-family: 'Roboto', sans-serif;text-decoration:none;}
 .questions-status-wrong {color:red; padding-left:50px;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;}
 
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+/**** Material UI */
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-const debugging = true;
-let answeredAllCorrect = 0;
+
 /*
 function debuggQ(props) {
     if (debugging) {
@@ -18,15 +18,9 @@ function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestio
     const style = {borderRadius:5, padding:5};
     //console.log(questionCorrect)
     if (isValid !== null) {
-        if(isValid ){
-        answeredAllCorrect = 1;
-        }else{
-            answeredAllCorrect = 1;
-        }
         style.background = isValid ? '#4caf50' : '#f44336';
         disabled=true;
     }
-
     return (
         
         <div style={style}>

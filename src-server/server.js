@@ -2,7 +2,7 @@ const { ApolloServer, gql } = require('apollo-server');
 
 const questionsOrig = require('../src/questions.json')
 
-const questions = [];
+let questions = [];
 
 
 
@@ -28,6 +28,7 @@ const typeDefs = gql`
     question: String
     uniqueid: Int
     answers: [Answer]
+    total: Int
     chapter(chapID:Int): Chapter
   }
 
@@ -54,28 +55,44 @@ const questions_q = [
 
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
-
-
 const resolvers = {
     Query: {
         questions: (_, args) => {
+            questions = [];
             for (let i in questionsOrig.questions_array) {
                 const question = questionsOrig.questions_array[i];
                 questions.push({
                     question: question.ques_text,
                     uniqueid: i,//question.chap_ques_num,
                     answers: question.answers,
-                    chapter: question.chap_info
+                    chapter: question.chap_info,
+                    total: 0
                 });
+    
                 //  console.log(questions[i].chapter.chap_id[1])
             }
+            
             //* Returns specifc chapter based on how much First and Offset is given
             if (args.chapID !== 999 && args.first !== undefined && args.filter !=='unique' && args.chapName === undefined) {
+                questions_chapter = null;
                 questions_chapter = questions.filter(x => {
                     return x.chapter.chap_id === args.chapID.toString();
                 })
-                return questions_chapter.slice(args.first, args.offset)
+ 
+                console.log(questions_chapter.length)
+                // first 0 
+                // offset 
                 
+                if(args.offset > questions_chapter.length){
+                    args.offset = questions_chapter.length;
+                    args.first =  questions_chapter.length - 10
+                }
+
+                return (
+                    questions_chapter.slice(args.first, args.offset)
+                )
+                    
+            
             //* Returns all chapters, based on how much First and Offset Is given
             } else if (args.chapID === 999) {
                 return questions.slice(args.first, args.offset)
@@ -106,8 +123,7 @@ const resolvers = {
                 })
                 return questions_chapter.slice(args.first)
             }
-        
-         
+            
         }
 
     }

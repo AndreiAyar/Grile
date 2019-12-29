@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import React from 'react'
+import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
+/**** Material UI */
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import  {MenuItem, FormControl, Select, InputLabel} from '@material-ui/core';
+
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -32,7 +30,7 @@ const GET_QUESTIONS = gql`
   
 `;
 
-function Chapters ({first, filter, setChapId, setCN}) {   
+function Chapters ({first, offset, filter, setChapId, setCN, setFirst, setOffset,}) {   
         const classes = useStyles();
         const { loading, error, data } = useQuery(GET_QUESTIONS, {
           variables: {first, filter}
@@ -40,17 +38,20 @@ function Chapters ({first, filter, setChapId, setCN}) {
         const handleChange = (event, {props}) => {
           setChapId(event.target.value);
           setCN(props.name);
+          setFirst(first = 0)
+          setOffset(offset = 10)
 
         };
         if (loading) return <p>Loading chapters...</p>;
+        if (error) return   <p>Error :(...</p>
         if (data && data.questions){
-          console.log(data.questions)
-        const MenuEl = data.questions.map(({chapter }, index) => 
-                <MenuItem style={{marginRight:10,marginBottom:10}} value={chapter.chap_id} name={chapter.chap_name}>{chapter.chap_name}</MenuItem>
+         // console.log(data.questions)
+        const MenuEl = data.questions.map(({chapter }, key) => 
+                <MenuItem style={{marginRight:10,marginBottom:10}} key={key} value={chapter.chap_id} name={chapter.chap_name}>{chapter.chap_name}</MenuItem>
 
         )
         return (
-          <FormControl className={classes.formControl}>
+          <FormControl className={classes.formControl} >
           <InputLabel id="demo-simple-select-label">Please select a Chapter</InputLabel>
           <Select
             labelId="demo-simple-select-label"

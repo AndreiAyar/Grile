@@ -1,26 +1,52 @@
-import React,{useState} from 'react';
+import React from 'react';
 import QuestionsList from './Questions'
-import { red } from '@material-ui/core/colors';
+
+/**** Material UI */
 
 
-const Grills = ({ chapID, cN, questionCorrect, setQuestionCorrect, questionWrong, setQuestionWrong}) => {
+const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrect, setQuestionCorrect, questionWrong, setQuestionWrong}) => {
+    const handlePage = (type) => {
+        if(type ==='forward'){
+            setFirst(first  + 10);
+            setOffset(offset + 10)
+        }else if(type==="backwards"){
+            console.log('first: ' + first + "offset: " + offset)
+            setFirst(first - 20)
+            setOffset(offset - 10)
+        }
+       
+    };
  //console.log(chapter)
     return (
 
         <div>
    
             <div className="chapter current">  <h2>Capitol Curent:  {cN} </h2></div>
-            <div class="questions-status">
-                <div class="questions-status-correct">
+            <div className="questions-status">
+                <div className="questions-status-correct">
                   Intrebari Corecte: {questionCorrect}
                  </div>
-                < div class="questions-status-wrong">
+                < div className="questions-status-wrong">
                   Intrebari Gresite: {questionWrong}
                  </div>
             </div>
-    
+            <div>    
+                <button onClick = {()=> 
+                 handlePage('forward')
+            }
+                        >
+                            Next Page 
+                 </button>
+                 <button onClick = {()=> 
+                 handlePage('backwards')
+            }
+                        >
+                          Prev Page
+                 </button>
+            </div>
+        
             <div>
-            <QuestionsList chapID={chapID} first={0} offset={250} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} 
+            <QuestionsList chapID={chapID} first={first} offset={offset} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} 
             />
                 
                 </div>

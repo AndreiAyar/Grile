@@ -1,14 +1,11 @@
-import React, { useState,useContext } from 'react';
+import React, { useState } from 'react';
 import Grills from './components/Grile'
 import Chapters from './components/Chapters'
 import HeaderMenu from './components/Header'
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import {ChapterProvider} from './contexts/TitleContext'
 import './style.css'
 
-/*test*/
-import TitleList from './contexts/TitleContext'
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
@@ -16,29 +13,29 @@ const client = new ApolloClient({
 
 
 function App() {
-  const [chapID, setChapId] = useState(2);
+  const [chapID, setChapId] = useState(1);
+  const [first, setFirst] = useState(0);
+  const [offset, setOffset] = useState(10);
   const [questionCorrect, setQuestionCorrect] = useState(0);
   const [questionWrong, setQuestionWrong] = useState(0)
-   const[cN, setCN] = useState(' ')
+  const[cN, setCN] = useState(' ')
   return (
     <React.Fragment>
-      <ChapterProvider>
       <HeaderMenu />
       <ApolloProvider client={client}>
         <div>
        {/*button onClick={() => setChapId(4)}>test</button>*/}
         <div id="chapters">
           <div className="chapters-list">
-           <Chapters setChapId={setChapId} setCN={setCN} first={0} filter={"unique"} />
+           <Chapters setChapId={setChapId} setCN={setCN} first={0} filter={"unique"}  setFirst={setFirst} setOffset={setOffset} />
            </div>
         </div>
         <div id="questions">
-        <Grills chapID={chapID} cN ={cN} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} setQuestionCorrect={setQuestionCorrect} questionCorrect={questionCorrect}/>
+        <Grills first={first} offset={offset} setFirst={setFirst} setOffset={setOffset} chapID={chapID} setChapId={setChapId} cN ={cN} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} setQuestionCorrect={setQuestionCorrect} questionCorrect={questionCorrect}/>
         
         </div>
         </div>
       </ApolloProvider >
-      </ChapterProvider>
     </React.Fragment>
 
   );
