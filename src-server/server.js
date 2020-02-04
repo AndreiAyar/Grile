@@ -3,8 +3,8 @@ const { ApolloServer, gql } = require('apollo-server');
 const questionsOrig = require('../src/questions.json')
 
 let questions = [];
-
-
+let questionsObj =[];
+let questionsInTotal;
 
 const typeDefs = gql`
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
@@ -17,6 +17,7 @@ const typeDefs = gql`
     ans_text: String
     correct:Int
   }
+
   
   type Chapter{
       question: [Question]
@@ -28,17 +29,19 @@ const typeDefs = gql`
     question: String
     uniqueid: Int
     answers: [Answer]
-    total: Int
     chapter(chapID:Int): Chapter
   }
 
+type Pagination{
+     perTotal:Int
+}
 
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     questions (chapID: Int, chapName: String, first:Int, offset:Int, filter:String):[Question]
-
+    pagination:Pagination
   }
 `;
 /*
@@ -65,11 +68,10 @@ const resolvers = {
                     question: question.ques_text,
                     uniqueid: i,//question.chap_ques_num,
                     answers: question.answers,
-                    chapter: question.chap_info,
-                    total: 0
+                    chapter: question.chap_info
                 });
     
-                //  console.log(questions[i].chapter.chap_id[1])
+               //  console.log(questions)
             }
             
             //* Returns specifc chapter based on how much First and Offset is given
@@ -79,15 +81,19 @@ const resolvers = {
                     return x.chapter.chap_id === args.chapID.toString();
                 })
  
-                console.log(questions_chapter.length)
+                //console.log(questions_chapter.length)
                 // first 0 
                 // offset 
-                
+
+                //Fallback in case pagination is abused
+                /*
                 if(args.offset > questions_chapter.length){
                     args.offset = questions_chapter.length;
                     args.first =  questions_chapter.length - 10
-                }
+                }*/
 
+               //Setting the total questions based on CHAPTER
+               questionsInTotal =  questions_chapter.length;
                 return (
                     questions_chapter.slice(args.first, args.offset)
                 )
@@ -100,8 +106,6 @@ const resolvers = {
             //* Returns all the Chapter names, based on First arg(usually 0...)
             }else if(args.first !== undefined && args.filter === 'unique'){
                 const gotQuestions = questions.slice(args.first)
-                
-                let questionsObj=[]
                 questionsSet = new Set(gotQuestions.map(z=>{
                     // console.log(questionsObj.find(x => x.chapter.chap_id === z.chapter_chap_id));
                     if(!questionsObj.find(x => x.chapter.chap_id === z.chapter.chap_id)) {
@@ -111,10 +115,11 @@ const resolvers = {
                                 chap_id: z.chapter.chap_id
                             }
                         })
+                      
                     }
-                }))
-                
-            console.log(questionsObj.length)
+                } ))
+
+              console.log(questionsObj.length)
               return questionsObj;
                 
             }else if(args.chapName !== undefined){
@@ -123,6 +128,13 @@ const resolvers = {
                 })
                 return questions_chapter.slice(args.first)
             }
+            
+        },
+        pagination: () => {
+            let paginationData = {
+                perTotal:questionsInTotal
+            }
+            return paginationData;
             
         }
 

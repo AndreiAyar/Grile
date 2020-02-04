@@ -17,7 +17,6 @@ import { green } from '@material-ui/core/colors';
     },
   }))(Button);
   
-
 const GET_QUESTIONS = gql`
     query($chapID:Int, $first:Int, $offset:Int){
         questions(chapID:$chapID, first:$first, offset:$offset)
@@ -34,14 +33,18 @@ const GET_QUESTIONS = gql`
             chap_name
           }
         }
+        pagination{
+            perTotal
+        }
     }
   
 `;
 
-function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong}) {
+function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong, totalQuestions, setTotalQuestions}) {
     //const [questionList, questionLoad] = useState({question});
     const [answeredItems, setAnsweredItems] = useState({});
     const [validItems, setValidItems] = useState({});
+    setTotalQuestions(totalQuestions)
    return(
         <div className='question'>
             {
@@ -62,6 +65,7 @@ function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, 
                                     questionCorrect={questionCorrect}
                                     setQuestionCorrect={setQuestionCorrect}
                                     correct={correct}
+                                    totalQuestions={totalQuestions}
                                     isValid={validItems[ans_num] !== undefined ? validItems[ans_num] : null}
                                     onChange={(ans_num, value) => {
                                         let newState = {
@@ -128,14 +132,13 @@ function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, 
     )
 }
 
-function QuestionsList({ chapID, first, offset, questionCorrect,setQuestionCorrect, questionWrong, setQuestionWrong }) {
+function QuestionsList({ chapID, first, offset, questionCorrect,setQuestionCorrect, questionWrong, setQuestionWrong, totalQutions, setTotalQuestions}) {
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
         variables: { chapID, first, offset }
     });
-  
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-    return data.questions.map(({ question, answers, chapter }, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect}  questionWrong={questionWrong} setQuestionWrong={setQuestionWrong}  question={question} answers={answers} chapter={chapter.chap_name}/>);
+    return data.questions.map(({ question, answers, chapter}, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect}  questionWrong={questionWrong} setQuestionWrong={setQuestionWrong}  question={question} answers={answers} chapter={chapter.chap_name} totalQuestions={data.pagination.perTotal} setTotalQuestions={setTotalQuestions}/>);
      }
 
 export default QuestionsList

@@ -4,7 +4,9 @@ import QuestionsList from './Questions'
 /**** Material UI */
 
 
-const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrect, setQuestionCorrect, questionWrong, setQuestionWrong}) => {
+
+const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrect, setQuestionCorrect, questionWrong, setQuestionWrong, totalQuestions, setTotalQuestions}) => {
+
     const handlePage = (type) => {
         if(type ==='forward'){
             setFirst(first  + 10);
@@ -46,7 +48,7 @@ const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrec
             </div>
         
             <div>
-            <QuestionsList chapID={chapID} first={first} offset={offset} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} 
+            <QuestionsList chapID={chapID} first={first} offset={offset} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} totalQuestions={totalQuestions} setTotalQuestions={setTotalQuestions}
             />
                 
                 </div>

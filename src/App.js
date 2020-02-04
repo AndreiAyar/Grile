@@ -18,6 +18,8 @@ function App() {
   const [offset, setOffset] = useState(10);
   const [questionCorrect, setQuestionCorrect] = useState(0);
   const [questionWrong, setQuestionWrong] = useState(0)
+  let [totalQuestions, setTotalQuestions] = useState(0);
+  console.log(totalQuestions)
   const[cN, setCN] = useState(' ')
   return (
     <React.Fragment>
@@ -31,7 +33,7 @@ function App() {
            </div>
         </div>
         <div id="questions">
-        <Grills first={first} offset={offset} setFirst={setFirst} setOffset={setOffset} chapID={chapID} setChapId={setChapId} cN ={cN} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} setQuestionCorrect={setQuestionCorrect} questionCorrect={questionCorrect}/>
+        <Grills totalQuestions={totalQuestions} setTotalQuestions={setTotalQuestions} first={first} offset={offset} setFirst={setFirst} setOffset={setOffset} chapID={chapID} setChapId={setChapId} cN ={cN} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} setQuestionCorrect={setQuestionCorrect} questionCorrect={questionCorrect}/>
         
         </div>
         </div>

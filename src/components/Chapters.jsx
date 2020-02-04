@@ -40,6 +40,7 @@ function Chapters ({first, offset, filter, setChapId, setCN, setFirst, setOffset
           setCN(props.name);
           setFirst(first = 0)
           setOffset(offset = 10)
+          
 
         };
         if (loading) return <p>Loading chapters...</p>;

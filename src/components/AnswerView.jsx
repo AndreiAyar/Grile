@@ -14,7 +14,7 @@ function debuggQ(props) {
 }
 */
 
-function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestionCorrect, questionCorrect}) {
+function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestionCorrect, questionCorrect, totalQuestions}) {
     const style = {borderRadius:5, padding:5};
     //console.log(questionCorrect)
     if (isValid !== null) {
