@@ -3,20 +3,20 @@ import AnswerView from './AnswerView'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 /**** Material UI */
-import {  withStyles, } from '@material-ui/core/styles';
+import { withStyles, } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { green } from '@material-ui/core/colors';
 
-  const ColorButton = withStyles(theme => ({
+const ColorButton = withStyles(theme => ({
     root: {
-      color: theme.palette.getContrastText(green[700]),
-      backgroundColor: green[700],
-      '&:hover': {
-        backgroundColor: green[900],
-      },
+        color: theme.palette.getContrastText(green[700]),
+        backgroundColor: green[700],
+        '&:hover': {
+            backgroundColor: green[900],
+        },
     },
-  }))(Button);
-  
+}))(Button);
+
 const GET_QUESTIONS = gql`
     query($chapID:Int, $first:Int, $offset:Int){
         questions(chapID:$chapID, first:$first, offset:$offset)
@@ -40,16 +40,17 @@ const GET_QUESTIONS = gql`
   
 `;
 
-function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong, totalQuestions, setTotalQuestions}) {
+function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, questionWrong, setQuestionWrong, totalQuestions, setTotalQuestions }) {
     //const [questionList, questionLoad] = useState({question});
     const [answeredItems, setAnsweredItems] = useState({});
     const [validItems, setValidItems] = useState({});
+    const [disabledStatus, setDisabledStatus] = useState(false);
     setTotalQuestions(totalQuestions)
-   return(
+    return (
         <div className='question'>
             {
 
-            
+
             }
             <div className='question-inner'>
                 <h3 className='question-list question-text'>{question}</h3>
@@ -57,7 +58,7 @@ function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, 
                     {
                         answers.map(({ ans_text, correct, ans_num }, index) => (
                             <li className="answer" key={index}>
-                                
+
                                 <AnswerView
                                     /*props={{ answerDetails: { ans_num, ans_text, correct }, questionDetails: { index, question } }}*/
                                     ans_num={ans_num}
@@ -80,66 +81,71 @@ function QuestionItem({ question, answers, setQuestionCorrect, questionCorrect, 
                                     }}
                                 />
                                 <span>
-                             {/* {correct}  <DisplayAnswer isCorrect={correct} />*/}
+                                    {/* {correct}  <DisplayAnswer isCorrect={correct} />*/}
                                     <br />
                                 </span>
                             </li>
                         ))
                     }
                 </ul>
-                <ColorButton variant="contained" color="primary" onClick={(e) => {
-               /* <button onClick={() => {*/
+                <ColorButton  disabled = {disabledStatus} variant="contained" color="primary" onClick={() => {
+                    /* <button onClick={() => {*/
                     let onlyOneValid = true;
                     const newValidItems = {};
+                    
                     answers.map((answer) => {
                         let isValid = false;
                         if (answeredItems[answer.ans_num] !== undefined) {
-                            
-                     
+
+
 
                             // daca eu am bifat true
                             if (answeredItems[answer.ans_num] === true && answer.correct) {
                                 isValid = true;
-                              
-           
+
+
                             }
 
                             newValidItems[answer.ans_num] = isValid;
-                           
+
                         }
 
                         else if (answer.correct && answeredItems[answer.ans_num] === undefined) {
                             newValidItems[answer.ans_num] = false;
                             onlyOneValid = false
-                                setQuestionWrong(questionWrong + 1)
-                            
-                          
-                        
-                       
+                            setQuestionWrong(questionWrong + 1)
+
+
+
+
                         }
-                     
-                   
+
+
 
                     });
-                    if(onlyOneValid !== false){
-                        setQuestionCorrect(questionCorrect+1)
+                    if (onlyOneValid !== false) {
+                        setQuestionCorrect(questionCorrect + 1)
+                      
                     }
-                 setValidItems(newValidItems);
+                    setValidItems(newValidItems);
+                    setDisabledStatus(true) 
 
-                }}>Verifica raspunsuri </ColorButton>
+                }
+                
+                }>Verifica raspunsuri </ColorButton>
             </div>
         </div>
     )
 }
 
-function QuestionsList({ chapID, first, offset, questionCorrect,setQuestionCorrect, questionWrong, setQuestionWrong, totalQutions, setTotalQuestions}) {
+function QuestionsList({ chapID, first, offset, questionCorrect, setQuestionCorrect, questionWrong, setQuestionWrong, totalQutions, setTotalQuestions }) {
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
         variables: { chapID, first, offset }
     });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-    return data.questions.map(({ question, answers, chapter}, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect}  questionWrong={questionWrong} setQuestionWrong={setQuestionWrong}  question={question} answers={answers} chapter={chapter.chap_name} totalQuestions={data.pagination.perTotal} setTotalQuestions={setTotalQuestions}/>);
-     }
+    return data.questions.map(({ question, answers, chapter }, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} question={question} answers={answers} chapter={chapter.chap_name} totalQuestions={data.pagination.perTotal} setTotalQuestions={setTotalQuestions} />);
+}
 
 export default QuestionsList
 

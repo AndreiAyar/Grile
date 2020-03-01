@@ -39,7 +39,7 @@ function Chapters ({first, offset, filter, setChapId, setCN, setFirst, setOffset
           setChapId(event.target.value);
           setCN(props.name);
           setFirst(first = 0)
-          setOffset(offset = 10)
+         // setOffset(offset = 10)
           
 
         };

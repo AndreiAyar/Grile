@@ -15,6 +15,7 @@ const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrec
             console.log('first: ' + first + "offset: " + offset)
             setFirst(first - 20)
             setOffset(offset - 10)
+            console.log(totalQuestions)
         }
        
     };

@@ -7,15 +7,23 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import './style.css'
 
 
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-});
+let client;
+if(window.location.hostname === 'localhost'){
+   client = new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+  });
+}else{
+   client = new ApolloClient({
+    uri: 'http://grile.ayar.ro/graphql',
+  });
+}
+
 
 
 function App() {
   const [chapID, setChapId] = useState(1);
   const [first, setFirst] = useState(0);
-  const [offset, setOffset] = useState(10);
+  const [offset, setOffset] = useState(999);
   const [questionCorrect, setQuestionCorrect] = useState(0);
   const [questionWrong, setQuestionWrong] = useState(0)
   let [totalQuestions, setTotalQuestions] = useState(0);
