@@ -6,7 +6,7 @@ import { gql } from "apollo-boost";
 import { withStyles, } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { green } from '@material-ui/core/colors';
-
+import Loading from './Loading'
 const ColorButton = withStyles(theme => ({
     root: {
         color: theme.palette.getContrastText(green[700]),
@@ -142,7 +142,7 @@ function QuestionsList({ chapID, first, offset, questionCorrect, setQuestionCorr
     const { loading, error, data } = useQuery(GET_QUESTIONS, {
         variables: { chapID, first, offset }
     });
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>
     if (error) return <p>Error :(</p>;
     return data.questions.map(({ question, answers, chapter }, index) => <QuestionItem key={index} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} question={question} answers={answers} chapter={chapter.chap_name} totalQuestions={data.pagination.perTotal} setTotalQuestions={setTotalQuestions} />);
 }

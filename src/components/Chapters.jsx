@@ -4,8 +4,7 @@ import { gql } from "apollo-boost";
 /**** Material UI */
 import { makeStyles } from '@material-ui/core/styles';
 import  {MenuItem, FormControl, Select, InputLabel} from '@material-ui/core';
-
-
+import Loading from './Loading'
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -43,17 +42,17 @@ function Chapters ({first, offset, filter, setChapId, setCN, setFirst, setOffset
           
 
         };
-        if (loading) return <p>Loading chapters...</p>;
+        if(loading)return <Loading second/>
         if (error) return   <p>Error :(...</p>
-        if (data && data.questions){
+        if ( data && data.questions){
          // console.log(data.questions)
         const MenuEl = data.questions.map(({chapter }, key) => 
                 <MenuItem style={{marginRight:10,marginBottom:10}} key={key} value={chapter.chap_id} name={chapter.chap_name}>{chapter.chap_name}</MenuItem>
 
         )
         return (
-          <FormControl className={classes.formControl} >
-          <InputLabel id="demo-simple-select-label">Please select a Chapter</InputLabel>
+          <FormControl style={{minWidth: '40%'}} className={classes.formControl} >
+          <InputLabel id="demo-simple-select-label">Te rog alege un capitol:</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"

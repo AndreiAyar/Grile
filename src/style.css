@@ -2,24 +2,25 @@ body {background-color:#FDFDFDee; margin:0 auto;}
 
 
 /**** Questions */
-.question{border:solid 1px #d3d3d3; border-radius:5px 10px;box-shadow:0px 1px rgb(190, 190, 190); width:80%;margin:50px 0 50px 20px;}
+.question{border:solid 1px #d3d3d3; border-radius:5px 10px;box-shadow:0px 1px rgb(190, 190, 190); width:80%;margin:0 auto 20px auto;}
         .question-inner{margin-left:20px;padding-bottom:26px;}
             .question-list{padding:0;}
             .question-text{color:#004445;font-weight: 400; font-size: 26px;font-family: 'Roboto', sans-serif;}
 
 
 /**** Answers */
-li.answer{list-style-type: none;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;width:50%;padding:5px 0 0 10px;}
+ .answers{padding:0;}
+li.answer{list-style-type: none;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;width:100%;padding:5px 0 0 10px }
 
 /**** Correct Vs Wrong */
-.questions-status{width:500px;margin:50px auto;}
-.questions-status-correct {color:green;float:left;font-family: 'Roboto', sans-serif;text-decoration:none;}
-.questions-status-wrong {color:red; padding-left:50px;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;}
+.questions-status{display:flex;flex-direction:row;justify-content:center;margin:40px;}
+.questions-status-correct {color:#004445; text-align:center;  line-height: 50px;width:150px;height:50px;background-color:rgba(0, 68, 69,0.2);border:solid 2px rgba(0, 68, 69,0.5);border-radius:10px;margin-right:50px;font-family: 'Roboto', sans-serif;text-decoration:none;}
+.questions-status-wrong {color:#F44336;text-align:center;  line-height: 50px;width:150px;height:50px; background-color:rgba(244, 67, 54,0.2);border:solid 2px rgba(244, 67, 54,0.5);border-radius:10px;font-family: 'Roboto', sans-serif;text-decoration:none;display:inline-block;}
 
 
 
 /**** Chapters */
-#chapters{border-top:5px solid #c8e6c9; margin-top:20px;}
-.chapters-list{width:800px;margin:20px auto;}
-            .current{margin:0 auto;padding-left:20px;width:800px;}
+#chapters{border-top:5px solid #c8e6c9; width:100%;margin-top:20px;text-align:center;}
+ 
+            .current{width:100%;text-align:center;}
             .current h2{color:#263238;font-family: 'Roboto', sans-serif;}

@@ -15,10 +15,11 @@ function debuggQ(props) {
 */
 
 function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestionCorrect, questionCorrect, totalQuestions}) {
-    const style = {borderRadius:5, padding:5};
+    const style = {borderRadius:5, padding:5,width:'90%'};
     //console.log(questionCorrect)
     if (isValid !== null) {
         style.background = isValid ? '#4caf50' : '#f44336';
+    
         disabled=true;
     }
     return (
@@ -31,7 +32,7 @@ function AnswerView({ ans_text, ans_num, isValid, onChange, disabled, setQuestio
             }}>
                 <FormGroup aria-label="position" row>
                     <FormControlLabel
-                        label={ans_text}
+                        label={<span style={{ fontSize: '1rem' }}>{ans_text}</span>}
                         disabled={disabled}
                         value="end"
                         control={<Checkbox color="primary" />}

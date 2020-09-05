@@ -33,20 +33,7 @@ const Grills = ({ chapID, cN, first, offset, setFirst, setOffset, questionCorrec
                   Intrebari Gresite: {questionWrong}
                  </div>
             </div>
-            <div>    
-                <button onClick = {()=> 
-                 handlePage('forward')
-            }
-                        >
-                            Next Page 
-                 </button>
-                 <button onClick = {()=> 
-                 handlePage('backwards')
-            }
-                        >
-                          Prev Page
-                 </button>
-            </div>
+           
         
             <div>
             <QuestionsList chapID={chapID} first={first} offset={offset} questionCorrect={questionCorrect} setQuestionCorrect={setQuestionCorrect} questionWrong={questionWrong} setQuestionWrong={setQuestionWrong} totalQuestions={totalQuestions} setTotalQuestions={setTotalQuestions}

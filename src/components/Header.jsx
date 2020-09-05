@@ -33,7 +33,8 @@ function HeaderMenu() {
                     <Typography variant="h6" className={classes.title}>
                         Medicină
           </Typography>
-                    <Button color="inherit">Login</Button>
+          
+                    <Button color="inherit">Welcome, Alina</Button>
                 </Toolbar>
             </AppBar>
         </div>
