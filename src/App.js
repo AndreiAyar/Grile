@@ -14,7 +14,7 @@ if(window.location.hostname === 'localhost'){
   });
 }else{
    client = new ApolloClient({
-    uri: 'http://grile.ayar.ro/graphql',
+    uri: 'https://grile.ayar.ro/graphql',
   });
 }
 
