@@ -9,9 +9,7 @@ let questionsObj =[];
 let questionsInTotal;
 
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
+ 
   type Answer {
     ans_num: String
     chosen: Int
@@ -37,26 +35,13 @@ const typeDefs = gql`
 type Pagination{
      perTotal:Int
 }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+ 
   type Query {
     questions (chapID: Int, chapName: String, first:Int, offset:Int, filter:String):[Question]
     pagination:Pagination
   }
 `;
-/*
-const questions_q = [
-    {
-        question: () => questionsOrig.questions_array[qid].ques_text,
-        uniqueid: 'J.K. Rowling',
-    },
-    {
-        question: 'Jurassic Park',
-        uniqueid: 'Michael Crichton',
-    },
-];*/
+ 
 
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
